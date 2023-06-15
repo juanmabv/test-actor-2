@@ -26,16 +26,72 @@
                     "display": {
                         "component": "table",
                         "properties": {
-                            "enlace": {
-                                "label": "Enlace a la oferta",
+                            "nombre": {
+                                "label": "Nombre a la oferta",
                                 "format": "text"
                             },
-                            "fecha": {
+                            "id": {
+                                "label": "id de la oferta",
+                                "format": "text"
+                            },
+                            "ubicacion": {
+                                "label": "Ubicación de la oferta",
+                                "format": "text"
+                            },
+                            "fecha_pub": {
                                 "label": "Fecha de publicación",
                                 "format": "text"
                             },
-                            "titulo": {
-                                "label": "Título de la oferta",
+                            "vacantes": {
+                                "label": "Número de vacantes",
+                                "format": "text"
+                            },
+                            "ett": {
+                                "label": "Empresa de trabajo temporal",
+                                "format": "text"
+                            },
+                            "discapacidad": {
+                                "label": "Puesto para persona con discapacidad",
+                                "format": "text"
+                            },
+                            "nivel_profesional": {
+                                "label": "Nivel profesional",
+                                "format": "text"
+                            },
+                            "experiencia": {
+                                "label": "Experiencia requerida",
+                                "format": "text"
+                            },
+                            "nivel_academico": {
+                                "label": "nivel académico",
+                                "format": "text"
+                            },
+                            "titulacion": {
+                                "label": "Titulación necesaria",
+                                "format": "text"
+                            },
+                            "idiomas": {
+                                "label": "Idiomas",
+                                "format": "text"
+                            },
+                            "informática": {
+                                "label": "Informática",
+                                "format": "text"
+                            },
+                            "otros_ctos": {
+                                "label": "Otros conocimientos necesarios",
+                                "format": "text"
+                            },
+                            "certif_prof": {
+                                "label": "Certificados de Profesionalidad",
+                                "format": "text"
+                            },
+                            "permisos_conducir": {
+                                "label": "Permisos de conducir",
+                                "format": "text"
+                            },
+                            "info_adicional": {
+                                "label": "Información adicional",
                                 "format": "text"
                             }
                         }
