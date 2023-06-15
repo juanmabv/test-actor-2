@@ -25,11 +25,9 @@ async def main():
     async with Actor:
         # Read the Actor input
         actor_input = await Actor.get_input() or {}
-        start_urls = actor_input.get('start_urls')
-        max_depth = actor_input.get('max_depth')
-        prueba_input = actor_input.get('prueba_input')
+        start_json = actor_input.get('start_json')
 
-        if not start_urls:
+        if not start_json:
             Actor.log.info(
                 'No start URLs specified in actor input, exiting...')
             await Actor.exit()
@@ -52,112 +50,10 @@ async def main():
 
         try:
 
-            driver.get(start_urls[0]['url'])
-
-            verbose = True
-
-            ofertas = True
-
-            if ofertas:
-                url_sce = "https://www.gobiernodecanarias.org/empleo/sce/principal/componentes/buscadores_angular/index_ofertas_empleo.jsp"
-
-                lista_titulo = []
-                lista_enlaces = []
-                lista_fecha = []
-
-                driver.get(url_sce)
-                pagina = 0
-
-                seguir = True
-                while seguir:
-
-                    # Get scroll height
-                    last_height = driver.execute_script(
-                        "return document.body.scrollHeight")
-
-                    # ESTO ES PARA IR BAJANDO Y QUE SALGAN
-                    while True:
-                        # Scroll down to bottom
-                        driver.execute_script(
-                            "window.scrollTo(0, document.body.scrollHeight);")
-
-                        # Wait to load page
-                        time.sleep(3)
-
-                        # Calculate new scroll height and compare with last scroll height
-                        new_height = driver.execute_script(
-                            "return document.body.scrollHeight")
-                        if new_height == last_height:
-                            break
-                        last_height = new_height
-
-                    lista_resultados = []
-
-                    tiempo_reposo = 1
-
-                    while len(lista_resultados) == 0 and tiempo_reposo < 100:
-                        try:
-                            # driver.execute_script("document.body.style.zoom='75%'")
-                            lista_resultados = driver.find_elements(
-                                By.CSS_SELECTOR, 'div.article.ng-star-inserted')
-                            print(lista_resultados)
-                            prueba = 5 / len(lista_resultados)
-                        except:
-                            print(f'tiempo reposo: {tiempo_reposo}')
-                            time.sleep(tiempo_reposo)
-                            tiempo_reposo += 10
-
-                    print(f'página: {pagina}')
-
-                    for oferta in lista_resultados:
-                        if oferta == lista_resultados[-1]:
-                            driver.execute_script(
-                                "window.scrollTo(0, document.body.scrollHeight);")
-                        else:
-                            pass
-
-                        time.sleep(1)
-                        titulo_oferta = oferta.find_element(
-                            By.CSS_SELECTOR, 'h6').get_attribute('innerText')
-                        print(titulo_oferta) if verbose else 1
-
-                        fecha_oferta = oferta.find_element(
-                            By.CSS_SELECTOR, 'ul > li:nth-child(1)').get_attribute('innerText').split(': ')[-1]
-                        print(fecha_oferta) if verbose else 1
-
-                        enlace_modal = oferta.find_element(
-                            By.CSS_SELECTOR, 'ul > li:nth-child(4) > a')
-                        enlace_modal.click()
-                        time.sleep(1)
-
-                        id_oferta = driver.find_element(
-                            By.CSS_SELECTOR, 'mat-dialog-content > table > tr:nth-child(1) > td:nth-child(2)').get_attribute('innerText')
-                        print(id_oferta) if verbose else 1
-
-                        enlace_oferta = f'https://www3.gobiernodecanarias.org/empleo/portal/web/sce/servicios/ofertas/ofertas_empleo/{id_oferta}'
-                        print(enlace_oferta) if verbose else 1
-
-                        await Actor.push_data({'enlace': enlace_oferta, 'fecha': fecha_oferta, 'titulo': titulo_oferta})
-
-                        webdriver.ActionChains(driver).send_keys(
-                            Keys.ESCAPE).perform()
-
-                    n_paginas = int(driver.find_element(By.CSS_SELECTOR, 'ul.ngx-pagination > li.ng-star-inserted:nth-child(7)')
-                                    .get_attribute('innerText')
-                                    .split('\n')[-1])
-                    pagina += 1
-                    print(f'Página {pagina} de {n_paginas}')
-
-                    try:
-                        boton_siguiente = driver.find_element(By.CSS_SELECTOR,
-                                                              'ul.ngx-pagination > li.ng-star-inserted:nth-child(8) > a')
-                        driver.execute_script("arguments[0].scrollIntoView();", driver.find_element(
-                            By.CSS_SELECTOR, 'ul.ngx-pagination'))
-                        boton_siguiente.click()
-                        pagina += 1
-                    except:
-                        seguir = False
-                        print('no hay página siguiente')
+            for _, row in start_json.iterrows():
+                data_dict = row.to_dict()
+                print(data_dict)
+                print(type(data_dict))
 
             # data = {
             #     'booleano': [True, False, False, True, True, False, False, True, False, False, True, False, True, False, True],
