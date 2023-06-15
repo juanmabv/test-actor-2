@@ -53,7 +53,7 @@ async def main():
             print(start_json)
             print(type(start_json))
 
-            for item in data['input_json']:
+            for item in start_json['input_json']:
                 url = item['enlace']
                 print(url)
 
