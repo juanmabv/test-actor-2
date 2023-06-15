@@ -55,6 +55,10 @@ async def main():
                 print(data_dict)
                 print(type(data_dict))
 
+            for item in data['input_json']:
+                url = item['enlace']
+                print(url)
+
             # data = {
             #     'booleano': [True, False, False, True, True, False, False, True, False, False, True, False, True, False, True],
             #     'texto': ['Hola', 'Mundo', 'Python', 'Data', 'Science', 'OpenAI', 'ChatGPT', 'Pandas', 'DataFrame', 'Ejemplo', 'Columna', 'Número', 'Fecha', 'Hora', 'Datetime'],
