@@ -50,10 +50,8 @@ async def main():
 
         try:
 
-            for _, row in start_json.iterrows():
-                data_dict = row.to_dict()
-                print(data_dict)
-                print(type(data_dict))
+            print(start_json)
+            print(type(start_json))
 
             for item in data['input_json']:
                 url = item['enlace']
